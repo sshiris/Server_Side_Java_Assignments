@@ -1,10 +1,15 @@
 package hw1.webforum;
 
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Vector;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class DisplayInfo {
-	public static void displayInfo(ArrayList<Entry> list, PrintWriter out) {
+	public static void displayInfo(Vector<Entry> list, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		
 		out.println("<html><head><title>Forum</title></head><body>");
         out.println("<h2>Forum</h2>");
         out.println("<a href='index.html'>Back</a><hr>");
@@ -21,6 +26,7 @@ public class DisplayInfo {
 			}
 		}
 		out.println("</body></html>");
+		out.close();
 	}
 
 }
