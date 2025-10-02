@@ -20,7 +20,7 @@ public class ForumServlet extends HttpServlet {
 			String username = request.getParameter("username");
 			String message = request.getParameter("message");
 			
-			if(username != null && message !=null && !username.isEmpty() && !message.isEmpty()) {
+			if(username != null && message !=null && !username.trim().isEmpty() && !message.trim().isEmpty()) {
 				Entry newEntry = new Entry(username, message);
 				list.add(newEntry);
 			}
