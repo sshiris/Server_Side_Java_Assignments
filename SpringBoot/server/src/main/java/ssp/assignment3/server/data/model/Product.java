@@ -5,15 +5,15 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 @JacksonXmlRootElement(localName = "product")
 public class Product {
 	private String name;
-	private String unit_price;
-	private String amount;
+	private double unit_price;
+	private double amount;
 	
 	public Product() {
 		this.name = "no_name";
-		this.unit_price = "no_unit_price";
-		this.amount = "no_amount";
+		this.unit_price = 0;
+		this.amount = 0;
 	}
-	public Product(String name, String unit_price, String amount) {
+	public Product(String name, double unit_price, double amount) {
 		this.name = name;
 		this.unit_price = unit_price;
 		this.amount = amount;
@@ -27,19 +27,19 @@ public class Product {
 		this.name = name;
 	}
 
-	public String getUnit_price() {
+	public double getUnit_price() {
 		return unit_price;
 	}
 
-	public void setUnit_price(String unit_price) {
+	public void setUnit_price(double unit_price) {
 		this.unit_price = unit_price;
 	}
 
-	public String getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	
