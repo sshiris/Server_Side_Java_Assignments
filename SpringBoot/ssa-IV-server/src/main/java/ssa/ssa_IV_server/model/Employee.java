@@ -1,19 +1,20 @@
 package ssa.ssa_IV_server.model;
 
 import java.time.LocalDate;
+import java.util.Base64;
 
 public class Employee {
 	private String id;
 	private String name;
-	private byte[] image;
 	private String job;
 	private LocalDate hireDate;
-	private double salary;
+	private int salary;
+	private String image;
 
 	public Employee() {
 	};
 
-	public Employee(String id, String name, byte[] image, String job, LocalDate hireDate, double salary) {
+	public Employee(String id, String name,  String job, LocalDate hireDate, int salary, String image) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -39,11 +40,11 @@ public class Employee {
 		this.name = name;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
@@ -63,13 +64,25 @@ public class Employee {
 		this.hireDate = hireDate;
 	}
 
-	public double getSalary() {
+	public int getSalary() {
 		return salary;
 	}
 
-	public void setSalary(double salary) {
+	public void setSalary(int salary) {
 		this.salary = salary;
 	}
+	
+//	public String getImageBase64() {
+//		if(image != null) {
+//			return Base64.getEncoder().encodeToString(image);
+//		}
+//		return null;
+//	}
+//	public void setImageFromBase64(String base64Image) {
+//		if(base64Image != null) {
+//			this.image = Base64.getDecoder().decode(base64Image);
+//		}
+//	}
 	
 	public boolean hasEmployee(String search) {
 		String searchText = search.toLowerCase();

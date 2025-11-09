@@ -10,8 +10,8 @@ public class Database {
 	private static final Map<String, Employee> employees = new ConcurrentHashMap<>();
 	
 	static {
-		employees.put("1", new Employee("1","Iris","Developer", LocalDate.of(2025, 11, 8), 8000,"alice.jpg"));
-		employees.put("1", new Employee("1","Iris","Developer", LocalDate.of(2025, 11, 8), 8000,"alice.jpg"));
+		employees.put("1", new Employee("1","Iris","Developer", LocalDate.of(2025, 11, 8), 8000,"iris1.jpg"));
+		employees.put("2", new Employee("2","IrisII","cleaner", LocalDate.of(2025, 11, 5), 7000,"iris2.jpg"));
 	}
 	
 	public static Map<String, Employee> getAll(){return employees;}

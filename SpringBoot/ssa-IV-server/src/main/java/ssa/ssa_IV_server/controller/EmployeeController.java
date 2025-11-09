@@ -20,6 +20,8 @@ import ssa.ssa_IV_server.db.Database;
 import ssa.ssa_IV_server.model.Employee;
 import ssa.ssa_IV_server.utility.EmployeeHandler;
 
+
+
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -38,6 +40,7 @@ public class EmployeeController {
 	public String add(@RequestBody Employee e) {
 		return Database.add(e);
 	}
+	
 	@PutMapping("/{id}")
 	public String update(@PathVariable String id, @RequestBody Employee e) {
 		return Database.update(id, e);
@@ -58,17 +61,3 @@ public class EmployeeController {
 		return EmployeeHandler.downloadImage(filename);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
