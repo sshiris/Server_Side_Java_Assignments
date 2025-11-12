@@ -28,14 +28,11 @@ import ssa.ssa_IV_client.model.Employee;
 public class Client {
     private static final String BASE_URI = "http://localhost:8080/ssa-IV-server/employees";
     
-    // Define client-side folders
     private static final String CLIENT_UPLOAD_DIR = "client-uploads/";
     private static final String CLIENT_DOWNLOAD_DIR = "client-downloads/";
 
     public static void main(String[] args) throws Exception {
-        // Create client directories when application starts
         createClientDirectories();
-        
         SpringApplication app = new SpringApplication(Client.class);
         app.setWebApplicationType(WebApplicationType.NONE);
         app.setBannerMode(Banner.Mode.OFF);
@@ -46,24 +43,20 @@ public class Client {
         File uploadDir = new File(CLIENT_UPLOAD_DIR);
         File downloadDir = new File(CLIENT_DOWNLOAD_DIR);
         
-        if (!uploadDir.exists()) {
+        if (!uploadDir.exists() || !downloadDir.exists()) {
             uploadDir.mkdirs();
-            System.out.println("Created client upload directory: " + uploadDir.getAbsolutePath());
-        }
-        
-        if (!downloadDir.exists()) {
             downloadDir.mkdirs();
-            System.out.println("Created client download directory: " + downloadDir.getAbsolutePath());
+            System.out.println("Created client upload/download directory: " + uploadDir.getAbsolutePath() +  downloadDir.getAbsolutePath());
         }
         
-        // List files in upload directory to help user
         listClientUploadFiles();
     }
     
     private static void listClientUploadFiles() {
         File uploadDir = new File(CLIENT_UPLOAD_DIR);
-        File[] files = uploadDir.listFiles();
         System.out.println("Client upload directory: " + uploadDir.getAbsolutePath());
+        
+        File[] files = uploadDir.listFiles();
         if (files != null && files.length > 0) {
             System.out.println("Available files for upload:");
             for (File file : files) {
@@ -86,7 +79,7 @@ public class Client {
             Scanner scanner = new Scanner(System.in);
             String choice = "";
             while (!choice.equals("8")) {
-                System.out.println("\n=== Employee Management System ===");
+            	
                 System.out.println("1. Show All Employees");
                 System.out.println("2. Add Employee");
                 System.out.println("3. Update Employee");
@@ -218,20 +211,14 @@ public class Client {
     }
     
     private static void uploadImage(Scanner scanner) {
-        System.out.print("Enter image filename (from client-uploads folder): ");
+        System.out.print("Enter image file path: ");
         String fileName = scanner.nextLine();
-        uploadFile("upload", fileName);
+        uploadFile(fileName);
     }
     
-    private static void downloadImage(Scanner scanner) {
-        System.out.print("Enter image filename to download: ");
-        String fileName = scanner.nextLine();
-        downloadFile("image", fileName);
-    }
-
-    public static void uploadFile(String path, String fileName) {
+    public static void uploadFile(String fileName) {
         try {
-            File fileToUpload = new File(CLIENT_UPLOAD_DIR + fileName);
+            File fileToUpload = new File(fileName);
             
             if (!fileToUpload.exists()) {
                 System.out.println("File not found: " + fileToUpload.getAbsolutePath());
@@ -247,7 +234,7 @@ public class Client {
 
             String response = WebClient.create(BASE_URI)
                     .post()
-                    .uri("/" + path)
+                    .uri("/upload")
                     .contentType(MediaType.MULTIPART_FORM_DATA)
                     .body(BodyInserters.fromMultipartData(body))
                     .retrieve()
@@ -261,6 +248,14 @@ public class Client {
             e.printStackTrace();
         }
     }
+    
+    private static void downloadImage(Scanner scanner) {
+        System.out.print("Enter image filename to download: ");
+        String fileName = scanner.nextLine();
+        downloadFile("image", fileName);
+    }
+
+    
 
     public static void downloadFile(String path, String fileName) {
         try {

@@ -7,11 +7,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 
 @SpringBootApplication
 public class Client {
@@ -25,7 +21,7 @@ public class Client {
 	@Bean
 	public CommandLineRunner clientCommandLineRunner() {
 		return args -> {
-			String baseURI = "http://localhost:8080/springboot_external_server/products/";
+			String baseURI = "http://localhost:8080/products/";
 
 			WebClient webClient = WebClient.builder().baseUrl(baseURI).build();
 

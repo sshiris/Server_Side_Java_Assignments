@@ -75,6 +75,22 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<plugin>
+<groupId>org.apache.tomcat.maven</groupId>
+<artifactId>tomcat7-maven-plugin</artifactId>
+<version>2.2</version>
+<configuration>
+<url>http://localhost:8080/manager/text</url>
+<!-- Here we specify to what server we want to deploy. The values inside
+<server> element must be the id of the server defined in the Maven settings.xml
+file -->
+<server>Tomcat11</server>
+<!-- Here we can define a custom context for the project -->
+<path>/springboot_external_server</path>
+<update>true</update>
+</configuration>
+</plugin>
 		</plugins>
 	</build>
 
