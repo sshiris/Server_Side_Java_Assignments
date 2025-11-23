@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+    
+    <display-name>Secure Employee Server</display-name>
+    
+    <!-- Initialization parameter for data storage location -->
+    <context-param>
+        <param-name>data_dir</param-name>
+        <param-value>employee_data</param-value>
+    </context-param>
+
+    <!-- Basic authentication configuration -->
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>Employee Manager Realm</realm-name>
+    </login-config>
+
+</web-app>
