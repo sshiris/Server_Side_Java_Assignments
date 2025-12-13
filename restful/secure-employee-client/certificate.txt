@@ -1,0 +1,5 @@
+# One command to get the actual server certificate
+openssl s_client -connect app.cc.puv.fi:443 -servername app.cc.puv.fi < /dev/null 2>/dev/null | openssl x509 -out actual_server.crt
+
+# One command to create truststore with the actual certificate
+keytool -import -noprompt -alias app-server -file actual_server.crt -keystore simple_truststore.jks -storepass Autumn2025

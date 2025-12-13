@@ -6,77 +6,56 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 
-import javax.net.ssl.SSLContext;
-
-import org.glassfish.jersey.SslConfigurator;
-import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
-import org.glassfish.jersey.media.sse.SseFeature;
 
 import jakarta.ws.rs.client.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.Employee;
 
+
 public class SecureEmployeeClient {
 	private static Client client;
-	//private static final String BASE_URL = "https://localhost:8443/secure-employee-server-v1.0/api/employees/";
-	private static final String BASE_URL = "http://app.cc.puv.fi/secure-employee-server-v1.0/api/employees/";
-	
-	//private static String username;
-	//private static String password;
-	private static Scanner scanner;
-	private static final String TRUSTSTORE_PATH = "truststores/my_truststore";
+   
+    private static final String BASE_URL = "https://app.cc.puv.fi:443/secure-employee-server-v1.0/api/employees/";
+    
+    private static Scanner scanner;
+    
+    // Your truststore path - verified it exists!
+    private static final String TRUSTSTORE_PATH = "/Users/iris/truststores/new_truststore.jks";
     private static final String TRUSTSTORE_PASSWORD = "Autumn2025";
 
-	public static void main(String[] args) {
-		try {
-			//promptForCredentials();
-			initializeClient();
-			runClientMenu();
-		} catch (Exception e) {
-			System.err.println("Client initialization failed: " + e.getMessage());
-			e.printStackTrace();
-		} finally {
-			if (client != null) {
-				client.close();
-			}
-		}
-	}
-//
-//	private static void promptForCredentials() {
-//		scanner = new Scanner(System.in);
-//		System.out.print("Username: ");
-//		username = scanner.nextLine().trim();
-//		System.out.print("Password: ");
-//		password = scanner.nextLine().trim();
-//
-//	}
-//
+    public static void main(String[] args) {
+        System.out.println("=== Secure Employee Client ===");
+        System.out.println("Server: " + BASE_URL);
+        
+        try {
+            // Set SSL properties
+            System.setProperty("javax.net.ssl.trustStore", TRUSTSTORE_PATH);
+            System.setProperty("javax.net.ssl.trustStorePassword", TRUSTSTORE_PASSWORD);
+            
+            
+            // Create client
+            client = ClientBuilder.newBuilder()
+                    .register(MultiPartFeature.class)
+                    .register(JacksonFeature.class)
+                    .build();
+            
+            System.out.println("✓ SSL configured with certificate for: app.cc.puv.fi");
+            
+            //  Run the client
+            runClientMenu();
+            
+        } catch (Exception e) {
+            System.err.println("Client failed to start: " + e.getMessage());
+            e.printStackTrace();
+       
+            }
+        }
 
-	private static void initializeClient() {
-//		System.setProperty("javax.net.ssl.trustStore", TRUSTSTORE_PATH);
-//        System.setProperty("javax.net.ssl.trustStorePassword", TRUSTSTORE_PASSWORD);
-
-        SslConfigurator sslConfig = SslConfigurator.newInstance()
-                .trustStoreFile(TRUSTSTORE_PATH)
-                .trustStorePassword(TRUSTSTORE_PASSWORD);
-        SSLContext sslContext = sslConfig.createSSLContext();
-		//HttpAuthenticationFeature auth = HttpAuthenticationFeature.basic(username, password);
-
-		client = ClientBuilder.newBuilder()
-                .sslContext(sslContext)
-                .register(SseFeature.class)
-                .register(MultiPartFeature.class)
-                .register(JacksonFeature.class)
-                .build();
-
-		System.out.println("Server: " + BASE_URL);
-	
-	}
 
 	private static void runClientMenu() {
 		scanner = new Scanner(System.in);
